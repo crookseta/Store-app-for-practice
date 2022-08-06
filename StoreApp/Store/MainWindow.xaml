@@ -1,0 +1,62 @@
+﻿<Window x:Class="Store.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Store"
+        mc:Ignorable="d"
+        Title="Store" Height="450" Width="800" Loaded="Window_Loaded" Closing="Window_Closing" Background="#FFC5C5C5" Unloaded="Window_Unloaded">
+    <Window.Resources>
+        <CollectionViewSource x:Key="productViewSource"/>
+        <CollectionViewSource x:Key="billViewSource" 
+                              Source="{Binding Bill, Source={StaticResource productViewSource}}"/>
+        <CollectionViewSource x:Key="detailViewSource" />
+    </Window.Resources>
+    <Grid>
+        <DataGrid x:Name="categoryDataGrid" AutoGenerateColumns="False" 
+          EnableRowVirtualization="True" 
+          ItemsSource="{Binding Source={StaticResource productViewSource}}" 
+          Margin="13,13,43,229" RowDetailsVisibilityMode="VisibleWhenSelected" MouseDoubleClick="categoryDataGrid_MouseDoubleClick">
+            <DataGrid.Columns>
+                <DataGridTextColumn Binding="{Binding IdProduct}"
+                            Header="Product Id" Width="SizeToHeader"
+                            IsReadOnly="True"/>
+                <DataGridTextColumn Binding="{Binding Name}" Header="Name" 
+                            Width="*"/>
+                <DataGridTextColumn Binding="{Binding Price}" Header="Price" 
+                            Width="Auto" IsReadOnly="True"/>
+            </DataGrid.Columns>
+        </DataGrid>
+        <DataGrid x:Name="productsDataGrid" AutoGenerateColumns="False" 
+          EnableRowVirtualization="True" 
+          ItemsSource="{Binding Source={StaticResource billViewSource}}" 
+          Margin="13,205,43,134" RowDetailsVisibilityMode="VisibleWhenSelected" 
+          RenderTransformOrigin="0.488,0.251">
+            <DataGrid.Columns>
+                <DataGridTextColumn Binding="{Binding IdBill}" 
+                            Header="Bill Id" Width="SizeToHeader"
+                            IsReadOnly="True"/>
+                <DataGridTextColumn Binding="{Binding BillNumber}" Header="Bill Number" 
+                            Width="Auto" IsReadOnly="True"/>
+                <DataGridTextColumn Binding="{Binding DateOnly}" Header="Date" Width="*"/>
+            </DataGrid.Columns>
+        </DataGrid>
+        <DataGrid x:Name="detailsDataGrid" AutoGenerateColumns="False" 
+          EnableRowVirtualization="True" 
+          ItemsSource="{Binding Source={StaticResource detailViewSource}}" 
+          Margin="13,290,43,40" RowDetailsVisibilityMode="VisibleWhenSelected" >
+            <DataGrid.Columns>
+                <DataGridTextColumn Binding="{Binding IdProduct}" 
+                            Header="Product Id" Width="SizeToHeader"
+                            IsReadOnly="True"/>
+                <DataGridTextColumn Binding="{Binding Product.Name}" 
+                            Header="Product Name" Width="*"
+                            IsReadOnly="True"/>
+                <DataGridTextColumn Binding="{Binding Quantity}" Header="Quantity" 
+                            Width="SizeToHeader" IsReadOnly="True"/>
+            </DataGrid.Columns>
+        </DataGrid>
+        <Button Content="Save" HorizontalAlignment="Center" Margin="0,390,0,0" 
+        Click="Button_Click" Height="20" Width="123"/>
+    </Grid>
+</Window>
