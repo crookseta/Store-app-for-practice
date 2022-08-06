@@ -107,8 +107,6 @@ namespace Store
 		private async void Window_Loaded(object sender, RoutedEventArgs e)
 		{
 			new Connect(this).Show();
-
-			//await LoadContext();
 		}
 
 		private async void Window_Closed(object sender, EventArgs e)
