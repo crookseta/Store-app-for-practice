@@ -73,7 +73,7 @@ namespace Store
 			{
 				await _context.Client.AddAsync(new StoreAppLib.Models.Client
 				{
-					IdClient = await _context.Client.CountAsync(),
+					IdClient = (await _context.Client.CountAsync())+1,
 					Name = SignUpNameTextBox.Text,
 					Lastname = SignUpLastnameTextBox.Text,
 					IdentificationNumber = SignUpIDTextBox.Text,
