@@ -24,7 +24,7 @@ namespace Store
 	{
 		private static readonly Regex _numbersOnly = new Regex("[^0-9.-]+");
 		private static readonly Regex _lettersOnly = new Regex("[^a-zA-Z]+");
-		private readonly ClientContext _context = new();
+		private ClientContext? _context;
 
 
 		public Signing()
@@ -32,6 +32,18 @@ namespace Store
 			InitializeComponent();
 		}
 
+		public async Task LoadContext()
+		{
+			try
+			{
+				_context = new();
+				await _context.Client.LoadAsync();
+			}
+			catch (Exception)
+			{
+				//
+			}
+		}
 
 		private async Task Login(string id)
 		{
@@ -94,7 +106,9 @@ namespace Store
 
 		private async void Window_Loaded(object sender, RoutedEventArgs e)
 		{
-			await _context.Client.LoadAsync();
+			new Connect(this).Show();
+
+			//await LoadContext();
 		}
 
 		private async void Window_Closed(object sender, EventArgs e)
